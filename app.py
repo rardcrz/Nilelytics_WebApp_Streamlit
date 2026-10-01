@@ -18,7 +18,7 @@ from PIL import Image
 # =============================================================================
 # >>> EDIT <<< 1. CONFIG
 # =============================================================================
-APP_TITLE = "🐟 Tilapia Disease Detector"
+APP_TITLE = " Nilelytics Tilapia Disease Detector"
 MODEL_PATH = "model/best.pt"     # weights from  runs/.../weights/best.pt
 IMG_SIZE = 800                   # same as IMG_SIZE used in training
 BASE_CONF = 0.25                 # low base threshold; per-class filters applied after
@@ -100,9 +100,9 @@ def run_inference(model, image: Image.Image, base_conf: float, imgsz: int):
 # =============================================================================
 # 4. UI
 # =============================================================================
-st.set_page_config(page_title="Tilapia Disease Detector", page_icon="🐟", layout="centered")
+st.set_page_config(page_title="Nilelytics Tilapia Disease Detector", layout="centered")
 st.title(APP_TITLE)
-st.caption("Upload or capture a clear, well-lit photo of a tilapia to check for signs of disease.")
+st.caption("Upload a clear, well-lit photo of a tilapia to check for signs of disease.")
 
 model = load_model()
 
@@ -129,19 +129,13 @@ if model is None:
     )
     st.stop()
 
-tab_upload, tab_camera = st.tabs(["📁 Upload", "📷 Camera"])
-with tab_upload:
-    uploaded = st.file_uploader("Choose an image", type=["jpg", "jpeg", "png"])
-with tab_camera:
-    captured = st.camera_input("Take a photo")
-
-file = uploaded or captured
+file = st.file_uploader("Choose an image", type=["jpg", "jpeg", "png"])
 
 if file is not None:
     image = Image.open(file)
     st.image(image, caption="Input image", use_container_width=True)
 
-    if st.button("🔍 Analyze", type="primary", use_container_width=True):
+    if st.button("ANALYZE", type="primary", use_container_width=True):
         with st.spinner("Analyzing..."):
             annotated, dets = run_inference(model, image, base_conf, imgsz)
 
@@ -177,4 +171,4 @@ if file is not None:
             st.dataframe(df, use_container_width=True, hide_index=True)
 
 st.divider()
-st.caption("⚠️ For screening purposes only. Consult a qualified aquaculture veterinarian for diagnosis and treatment.")
+st.caption("For screening purposes only. Consult a qualified aquaculture veterinarian for diagnosis and treatment.")
