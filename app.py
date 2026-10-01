@@ -129,7 +129,7 @@ if model is None:
     )
     st.stop()
 
-file = st.file_uploader("Choose an image", type=["jpg", "jpeg", "png"])
+file = st.file_uploader("Choose an image", type=["jpg", "jpeg", "png", "jfif", "webp"])
 
 if file is not None:
     image = Image.open(file)
